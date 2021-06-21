@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,12 +24,7 @@ public class CarrinhoService {
     ProdutoRepository produtoRepository;
 
     public ResponseEntity adicionarItem(ItemDto itemDto) {
-
-        System.out.print("Id do produto: " + itemDto.getIdProduto());
-        System.out.print("Quantidade do produto: " + itemDto.getQuantidade());
-
-        Optional<Produto> produto = produtoRepository.findById((long) 1);
-
+        Optional<Produto> produto = produtoRepository.findById(itemDto.getIdProduto());
 
         if(produto.isPresent()){
             ItemCarrinho itemCarrinho = new ItemCarrinho(produto.get(), itemDto.getQuantidade());
@@ -39,10 +35,6 @@ public class CarrinhoService {
     }
 
     public CarrinhoDto checkout(){
-
-        System.out.println(carrinhoDeCompras.get(0).getProduto().getPrecoProduto());
-        System.out.println(carrinhoDeCompras.get(0).getQuantidade());
-
         BigDecimal subtotal = calcularSubTotal();
         BigDecimal frete = calcularFrete(subtotal);
         BigDecimal total = calcularTotal(subtotal, frete);
@@ -50,31 +42,34 @@ public class CarrinhoService {
         return new CarrinhoDto(frete, subtotal, total);
     }
 
-
-    private BigDecimal calcularFrete(BigDecimal subtotal) {
-
-        if(temFreteGratis(subtotal)){
-            return new BigDecimal("0");
-        }
-
-        BigDecimal frete = new BigDecimal("0");
-        carrinhoDeCompras.forEach(item -> frete.add(new BigDecimal("10")));
-
-        return frete;
-    }
-
     private BigDecimal calcularSubTotal() {
         BigDecimal subtotal = new BigDecimal("0");
 
         for(ItemCarrinho item : carrinhoDeCompras){
-            subtotal.add(item.getProduto().getPrecoProduto().multiply(BigDecimal.valueOf(item.getQuantidade())));
+            subtotal = subtotal.add(item.getProduto().getPrecoProduto().multiply(BigDecimal.valueOf(item.getQuantidade())));
         }
 
         return subtotal;
     }
 
+    private BigDecimal calcularFrete(BigDecimal subtotal) {
+        if(temFreteGratis(subtotal)){
+            return new BigDecimal("0");
+        }
+
+        BigDecimal frete = new BigDecimal("0");
+        for(ItemCarrinho item : carrinhoDeCompras){
+            frete = frete.add(new BigDecimal("10"));
+        }
+
+        System.out.println("O valor do frete é " + frete);
+        return frete;
+    }
+
     public boolean temFreteGratis(BigDecimal subtotal){
-        if(subtotal.compareTo(new BigDecimal("250")) > 0){
+        BigDecimal valorLimite = new BigDecimal("250");
+
+        if((subtotal.compareTo(valorLimite) == 1) || (subtotal.compareTo(valorLimite) == 0)){
             return true;
         }
         return false;

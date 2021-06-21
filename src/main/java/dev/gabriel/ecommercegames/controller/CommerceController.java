@@ -27,7 +27,6 @@ public class CommerceController {
         return carrinhoService.adicionarItem(itemDto);
     }
 
-
     @GetMapping("/checkout")
     public ResponseEntity<CarrinhoDto> checkout(){
         return ResponseEntity.ok().body(carrinhoService.checkout());
