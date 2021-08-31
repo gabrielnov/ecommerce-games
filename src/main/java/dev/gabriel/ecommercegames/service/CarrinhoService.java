@@ -61,8 +61,7 @@ public class CarrinhoService {
         for(ItemCarrinho item : carrinhoDeCompras){
             frete = frete.add(new BigDecimal("10"));
         }
-
-        System.out.println("O valor do frete é " + frete);
+        
         return frete;
     }
 
