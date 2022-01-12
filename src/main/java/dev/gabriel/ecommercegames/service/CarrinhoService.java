@@ -68,10 +68,7 @@ public class CarrinhoService {
     public boolean temFreteGratis(BigDecimal subtotal){
         BigDecimal valorLimite = new BigDecimal("250");
 
-        if((subtotal.compareTo(valorLimite) == 1) || (subtotal.compareTo(valorLimite) == 0)){
-            return true;
-        }
-        return false;
+        return subtotal.compareTo(valorLimite) == 1) || (subtotal.compareTo(valorLimite) == 0);            
     }
 
     private BigDecimal calcularTotal(BigDecimal subtotal, BigDecimal frete) {
