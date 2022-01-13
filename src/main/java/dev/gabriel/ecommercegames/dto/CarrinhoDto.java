@@ -1,4 +1,4 @@
-package dev.gabriel.ecommercegames.model;
+package dev.gabriel.ecommercegames.dto;
 
 import java.math.BigDecimal;
 

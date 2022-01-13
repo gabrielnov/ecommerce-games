@@ -1,17 +1,13 @@
 package dev.gabriel.ecommercegames.controller;
 
 import dev.gabriel.ecommercegames.dto.ItemDto;
-import dev.gabriel.ecommercegames.model.CarrinhoDto;
-import dev.gabriel.ecommercegames.model.ItemCarrinho;
+import dev.gabriel.ecommercegames.dto.CarrinhoDto;
 import dev.gabriel.ecommercegames.model.Produto;
 import dev.gabriel.ecommercegames.service.CarrinhoService;
 import dev.gabriel.ecommercegames.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api")

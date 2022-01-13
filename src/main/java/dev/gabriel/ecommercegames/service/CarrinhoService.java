@@ -2,7 +2,7 @@ package dev.gabriel.ecommercegames.service;
 
 import dev.gabriel.ecommercegames.dto.ItemDto;
 import dev.gabriel.ecommercegames.model.ItemCarrinho;
-import dev.gabriel.ecommercegames.model.CarrinhoDto;
+import dev.gabriel.ecommercegames.dto.CarrinhoDto;
 import dev.gabriel.ecommercegames.model.Produto;
 import dev.gabriel.ecommercegames.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -68,7 +67,7 @@ public class CarrinhoService {
     public boolean temFreteGratis(BigDecimal subtotal){
         BigDecimal valorLimite = new BigDecimal("250");
 
-        return subtotal.compareTo(valorLimite) == 1) || (subtotal.compareTo(valorLimite) == 0);            
+        return (subtotal.compareTo(valorLimite) == 1) || (subtotal.compareTo(valorLimite) == 0);
     }
 
     private BigDecimal calcularTotal(BigDecimal subtotal, BigDecimal frete) {
